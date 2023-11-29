@@ -19,9 +19,17 @@ namespace PracticaGit2324
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string textoTelegrama;
-            char tipoTelegrama = ' ';
+            string textoTelegrama = txtTelegrama.Text;
             int numPalabras = 0;
+            double coste = 0;
+            // Obtener el número de palabras que forma el telegrama
+            char[] delimitadores = new char[] { ' ', '\r', '\n' };
+            numPalabras = textoTelegrama.Split(delimitadores,
+            StringSplitOptions.RemoveEmptyEntries).Length;
+            // Calcular el costo del telegrama
+            if (cbUrgente.Checked)
+            {
+                // Telegrama urgente
             double coste = 0;
 
             // Leo el telegrama
@@ -40,24 +48,19 @@ namespace PracticaGit2324
             if (tipoTelegrama == 'o')
             {
                 if (numPalabras <= 10)
-                    coste = 2.5;
+                    coste = 25;
                 else
-                    coste = 2.5 + 0.5 * (numPalabras - 10);
-            }
-            else if (tipoTelegrama == 'u')
-            {
+                    coste = 0.5 * numPalabras;
+            else
+            //Si el telegrama es urgente
+            if (tipoTelegrama == 'u')
                 if (numPalabras <= 10)
                     coste = 5;
                 else
                     coste = 5 + 0.75 * (numPalabras - 10);
-            }
             else
-            {
                 coste = 0;
-            }
-
-            txtPrecio.Text = coste.ToString("C2"); // Muestra el costo en formato de moneda
-
+            txtPrecio.Text = coste.ToString() + " euros";
 
         }
     }
